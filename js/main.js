@@ -47,7 +47,11 @@ function render() {
     li.append(btnEdit);
     list.append(li);
     btnDelete.addEventListener("click", () => {
-      deleteElement(index);
+      // событие на кнопку delete
+      deleteElement(index); // вызов функции, в аргументы передаём индекс кнопки
+    });
+    btnEdit.addEventListener("click", () => {
+      editElement(index); // вызов функции edit, в аргументы передаём индекс элемента
     });
   });
 }
@@ -58,4 +62,19 @@ function deleteElement(id) {
   data.splice(id, 1);
   localStorage.setItem("task-data", JSON.stringify(data));
   render();
+}
+
+// Функция для редактирования таска
+// сохраняем в переменные, элементы моадльного окна
+let mainModal = document.querySelector(".main-modal");
+let btnCloser = document.querySelector(".btn-closer");
+let btnSave = document.querySelector(".btn-save");
+let inpEdit = document.querySelector(".inp-edit");
+
+function editElement(id) {
+  mainModal.style.display = "block";
+  let data = JSON.parse(localStorage.getItem("task-data"));
+  inpEdit.setAttribute("id", id);
+  inpEdit.value = data[id].task;
+  console.log(data[id]);
 }
